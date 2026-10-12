@@ -1,7 +1,7 @@
 # Ficha para Microsoft Store — Aguinaldo y Sueldo AR
 
 ## Nombre para reservar
-`Aguinaldo y Sueldo AR` (alternativas: `Calculadora de Aguinaldo y Sueldo AR`, `Aguinaldo AR`)
+`Calculadora de Aguinaldo y Sueldo AR` (reservado)
 
 ## Descripción
 Calculá en segundos cuánto vas a cobrar de aguinaldo, tu sueldo neto y tus días de vacaciones, según la Ley de Contrato de Trabajo de Argentina.
