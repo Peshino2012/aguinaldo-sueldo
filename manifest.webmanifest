@@ -1,0 +1,28 @@
+{
+  "id": "./",
+  "name": "Aguinaldo y Sueldo AR",
+  "short_name": "Aguinaldo AR",
+  "description": "Calculá tu aguinaldo, tu sueldo neto y tus días de vacaciones según la Ley de Contrato de Trabajo de Argentina.",
+  "lang": "es-AR",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f4f8",
+  "theme_color": "#2b4c9b",
+  "categories": ["finance", "business", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Aguinaldo", "url": "./#aguinaldo" },
+    { "name": "Sueldo neto", "url": "./#neto" },
+    { "name": "Vacaciones", "url": "./#vacaciones" }
+  ],
+  "screenshots": [
+    { "src": "store/captura-aguinaldo.png", "sizes": "1366x768", "type": "image/png", "form_factor": "wide", "label": "Cálculo del aguinaldo con el detalle de descuentos" },
+    { "src": "store/captura-celular.png", "sizes": "414x896", "type": "image/png", "form_factor": "narrow", "label": "Aguinaldo y Sueldo en una ventana angosta" }
+  ]
+}

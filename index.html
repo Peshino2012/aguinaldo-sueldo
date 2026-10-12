@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aguinaldo y Sueldo AR</title>
+  <meta name="description" content="Calculá tu aguinaldo, tu sueldo neto y tus vacaciones según la Ley de Contrato de Trabajo de Argentina.">
+  <meta name="theme-color" content="#2b4c9b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1320" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <img src="icons/icon-192.png" alt="" width="40" height="40">
+      <div>
+        <h1>Aguinaldo y Sueldo</h1>
+        <p>Calculadora para trabajadores en relación de dependencia en Argentina</p>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Calculadoras">
+      <button role="tab" id="tab-aguinaldo" aria-controls="panel-aguinaldo" aria-selected="true">Aguinaldo</button>
+      <button role="tab" id="tab-neto" aria-controls="panel-neto" aria-selected="false" tabindex="-1">Sueldo neto</button>
+      <button role="tab" id="tab-vacaciones" aria-controls="panel-vacaciones" aria-selected="false" tabindex="-1">Vacaciones</button>
+    </nav>
+
+    <!-- Aguinaldo -->
+    <section class="panel" id="panel-aguinaldo" role="tabpanel" aria-labelledby="tab-aguinaldo">
+      <form class="form" id="f-aguinaldo" autocomplete="off">
+        <div class="campo">
+          <label for="ag-sueldo">Mejor sueldo bruto del semestre</label>
+          <input id="ag-sueldo" inputmode="decimal" placeholder="Ej.: 1.250.000">
+          <small>El más alto de enero a junio, o de julio a diciembre, sin descuentos.</small>
+        </div>
+        <div class="fila">
+          <div class="campo">
+            <label for="ag-semestre">Semestre</label>
+            <select id="ag-semestre">
+              <option value="1">1.º (enero a junio)</option>
+              <option value="2">2.º (julio a diciembre)</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="ag-anio">Año</label>
+            <input id="ag-anio" type="number" min="2000" max="2100" step="1">
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="ag-parcial"> No trabajé el semestre completo</label>
+        <div class="fila" id="ag-fechas" hidden>
+          <div class="campo">
+            <label for="ag-ingreso">Fecha de ingreso</label>
+            <input id="ag-ingreso" type="date">
+          </div>
+          <div class="campo">
+            <label for="ag-egreso">Fecha de egreso <span class="opc">(si dejaste el trabajo)</span></label>
+            <input id="ag-egreso" type="date">
+          </div>
+        </div>
+        <details class="mas">
+          <summary>Más opciones</summary>
+          <div class="fila">
+            <div class="campo">
+              <label for="ag-metodo">Cálculo proporcional</label>
+              <select id="ag-metodo">
+                <option value="dias">Sobre los días del semestre</option>
+                <option value="180">Sobre 180 días</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="ag-sindicato">Aporte sindical (%)</label>
+              <input id="ag-sindicato" inputmode="decimal" placeholder="0">
+            </div>
+          </div>
+        </details>
+      </form>
+      <div class="recibo" id="r-aguinaldo" aria-live="polite"></div>
+    </section>
+
+    <!-- Sueldo neto -->
+    <section class="panel" id="panel-neto" role="tabpanel" aria-labelledby="tab-neto" hidden>
+      <form class="form" id="f-neto" autocomplete="off">
+        <div class="campo">
+          <label for="ne-bruto">Sueldo bruto mensual</label>
+          <input id="ne-bruto" inputmode="decimal" placeholder="Ej.: 1.250.000">
+        </div>
+        <div class="campo">
+          <label for="ne-sindicato">Aporte sindical (%) <span class="opc">(opcional)</span></label>
+          <input id="ne-sindicato" inputmode="decimal" placeholder="0">
+        </div>
+      </form>
+      <div class="recibo" id="r-neto" aria-live="polite"></div>
+    </section>
+
+    <!-- Vacaciones -->
+    <section class="panel" id="panel-vacaciones" role="tabpanel" aria-labelledby="tab-vacaciones" hidden>
+      <form class="form" id="f-vacaciones" autocomplete="off">
+        <div class="fila">
+          <div class="campo">
+            <label for="va-ingreso">Fecha de ingreso al trabajo</label>
+            <input id="va-ingreso" type="date">
+          </div>
+          <div class="campo">
+            <label for="va-anio">Vacaciones del año</label>
+            <input id="va-anio" type="number" min="2000" max="2100" step="1">
+          </div>
+        </div>
+        <div class="campo">
+          <label for="va-sueldo">Sueldo bruto mensual <span class="opc">(para calcular cuánto cobrás)</span></label>
+          <input id="va-sueldo" inputmode="decimal" placeholder="Ej.: 1.250.000">
+        </div>
+      </form>
+      <div class="recibo" id="r-vacaciones" aria-live="polite"></div>
+    </section>
+
+    <footer class="foot">
+      <p>Cálculos orientativos según la Ley de Contrato de Trabajo. No incluyen impuesto a las ganancias, topes de aportes ni reglas especiales de tu convenio colectivo. Para el monto exacto, revisá tu recibo o consultá con tu empleador.</p>
+      <p><a href="privacidad.html">Política de privacidad</a> · Aguinaldo y Sueldo AR 1.0</p>
+    </footer>
+  </div>
+</body>
+</html>

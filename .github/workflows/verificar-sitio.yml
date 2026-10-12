@@ -1,0 +1,62 @@
+name: verificar-sitio
+
+# Abre la app publicada en GitHub Pages con un navegador real y revisa lo que
+# necesitan PWABuilder y Microsoft Store: archivos, manifiesto, service worker,
+# que calcule bien y que funcione sin conexión.
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    env:
+      URL: https://peshino2012.github.io/aguinaldo-sueldo/
+    steps:
+      - name: Archivos publicados
+        run: |
+          set -e
+          for f in "" index.html manifest.webmanifest sw.js logic.js app.js styles.css privacidad.html \
+                   icons/icon-192.png icons/icon-512.png icons/maskable-512.png store/captura-aguinaldo.png; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$f")
+            echo "$code  $f"
+            [ "$code" = "200" ]
+          done
+          curl -sf "${URL}manifest.webmanifest" | jq -e '.name and .start_url and (.icons | length >= 2)' > /dev/null
+          echo "manifiesto OK"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Navegador real
+        run: |
+          npm i --no-save playwright@1 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+          cat > prueba.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const b = await chromium.launch();
+          const p = await b.newPage({ viewport: { width: 1366, height: 768 }, locale: 'es-AR' });
+          const errores = [];
+          p.on('pageerror', (e) => errores.push(String(e)));
+          p.on('console', (m) => { if (m.type() === 'error') errores.push(m.text()); });
+          await p.goto(process.env.URL);
+          await p.fill('#ag-sueldo', '1.000.000');
+          await p.selectOption('#ag-semestre', '2');
+          await p.fill('#ag-anio', '2026');
+          await p.waitForFunction(() => navigator.serviceWorker.controller !== null, null, { timeout: 20000 }).catch(() => {});
+          const r = {
+            aguinaldo: (await p.textContent('#r-aguinaldo .grande')).replace(/\s/g, ' '),
+            sw: await p.evaluate(async () => !!(await navigator.serviceWorker.getRegistration())),
+          };
+          await p.context().setOffline(true);
+          await p.reload();
+          await p.fill('#ag-sueldo', '1.000.000');
+          r.offline = (await p.textContent('#r-aguinaldo .grande')).replace(/\s/g, ' ');
+          r.errores = errores;
+          console.log(JSON.stringify(r, null, 2));
+          await b.close();
+          if (!r.sw || r.aguinaldo !== '$ 415.000,00' || !r.offline.startsWith('$') || errores.length) process.exit(1);
+          JS
+          set -o pipefail
+          node prueba.mjs | tee -a "$GITHUB_STEP_SUMMARY"

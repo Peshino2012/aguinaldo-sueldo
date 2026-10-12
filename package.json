@@ -1,0 +1,11 @@
+{
+  "name": "sueldo-ar",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Aguinaldo y sueldo: calculadora de aguinaldo, sueldo neto y vacaciones para Argentina (PWA)",
+  "scripts": {
+    "test": "node --test --test-reporter=spec"
+  },
+  "license": "MIT"
+}
