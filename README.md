@@ -2,8 +2,9 @@
 
 Calculadora de aguinaldo (SAC), sueldo neto y vacaciones para trabajadores en
 relación de dependencia en Argentina, según la Ley de Contrato de Trabajo.
-App web instalable (PWA) pensada para publicarse en Microsoft Store con
-PWABuilder. No usa internet: todo se calcula y se guarda en el equipo.
+App web instalable (PWA), publicada en Microsoft Store:
+**https://apps.microsoft.com/detail/9P7R588K511S** . No usa internet: todo se
+calcula y se guarda en el equipo.
 
 - Aguinaldo: 50% del mejor sueldo del semestre (LCT arts. 121-122); proporcional
   por días trabajados, sobre los días reales del semestre o sobre 180.
